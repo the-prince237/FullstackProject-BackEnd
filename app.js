@@ -7,7 +7,7 @@ const app = express();//nous créons une application express grace à la méthod
 //nous créons des middlewares, affectés des arguments req, res, et next.
 // ici, la fonction next permet de passer au middleware suivant après avoir éxécuté celui en cours 
 app.use((req, res, next) => {
-    console.("requête reçue !");
+    console.log("requête reçue !");
     next();
 });
 
