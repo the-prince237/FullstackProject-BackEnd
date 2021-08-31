@@ -4,10 +4,10 @@ const app = require("./app");
 const normalizePort = val => {
     const port = parseInt(val, 10);
 
-    if(isNaN(port)){
+    if (isNaN(port)) {
         return val;
     }
-    if(port >= 0){
+    if (port >= 0) {
         return port;
     }
     return false;
@@ -18,10 +18,10 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 const erroHandler = error => {
-    if(error.syscall !== "listen"){
+    if (error.syscall !== "listen") {
         throw error;
     }
-    const address =  server.address();
+    const address = server.address();
     const bind = typeof address === "string" ? "pipe" + address : "port: " + port;
     switch (error.code) {
         case "EACCES":
@@ -29,7 +29,7 @@ const erroHandler = error => {
             process.exit(1);
             break;
         case "EADDRINUSE":
-            console.error(bind+ "is already in use.");
+            console.error(bind + "is already in use.");
             process.exit(1);
             break;
         default:
@@ -43,7 +43,7 @@ server.on("error", erroHandler);
 server.on("listening", () => {
     const address = server.address();
     const bind = typeof address === "string" ? "pipe" + address : "port" + port;
-    console.log("Listening on "+ bind);
+    console.log("Listening on " + bind);
 });
 
 server.listen(port);
