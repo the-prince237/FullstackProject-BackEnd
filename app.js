@@ -1,11 +1,16 @@
-//nous importons le package express après avoir installé express à partir de notre dossier backend. 
+const mongoose = require("mongoose");
 const express = require("express");
+const bodyParser = require("body-parser");
 
+const app = express();
 
-const app = express(); //nous créons une application express grace à la méthode express()
+mongoose.connect('mongodb+srv://myUser:albafikaforMongodb@myfirstcluster.8hb5y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-//nous créons des middlewares, affectés des arguments req, res, et next.
-// ici, la fonction next permet de passer au middleware suivant après avoir éxécuté celui en cours 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*"); //permet d'accéder à notre API depuis n'importe quel origine (*)
     res.setHeader("Access-Control-Allow-Headers", "origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
@@ -13,6 +18,15 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
     //permet d'envoyer des requêtes avec les méthodes mentionnées (GET, POST, etc.).
     next();
+});
+
+app.use(bodyParser.json());
+
+app.post("/api/stuff", (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({
+        message: "objet crée!"
+    });
 });
 
 app.use("/api/stuff", (req, res, next) => {
